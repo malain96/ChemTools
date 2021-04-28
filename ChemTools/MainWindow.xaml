@@ -1,0 +1,33 @@
+﻿<Window x:Class="ChemTools.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChemTools"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid HorizontalAlignment="Center" Width="auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Content="Selected files" VerticalAlignment="Bottom"/>
+        <Button Grid.Column="1" Name="btnOpenFile" Click="btnOpenFiles_Click" Margin="0,5">Open files</Button>
+        <Button Grid.Column="2" Name="btnClear" Click="btnClear_Click" Margin="5,5,0,5">Clear</Button>
+        <ListBox Grid.ColumnSpan="3" Grid.Row="1" Name="lbFiles" KeyDown="lbFiles_KeyDown" Width="400"/>
+        <Label Grid.ColumnSpan="3" Grid.Row="3" Content="Increment" />
+        <TextBox Grid.ColumnSpan="3" Grid.Row="4" Name="tbIncrement" Padding="2" PreviewTextInput="tbIncrement_PreviewTextInput"/>
+        <Button Grid.ColumnSpan="3" Grid.Row="6"  Name="btnGenerate" Click="btnGenerate_Click">Generate</Button>
+    </Grid>
+
+</Window>
