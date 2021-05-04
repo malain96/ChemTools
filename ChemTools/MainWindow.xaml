@@ -25,9 +25,11 @@
         <Button Grid.Column="1" Name="btnOpenFile" Click="btnOpenFiles_Click" Margin="0,5">Open files</Button>
         <Button Grid.Column="2" Name="btnClear" Click="btnClear_Click" Margin="5,5,0,5">Clear</Button>
         <ListBox Grid.ColumnSpan="3" Grid.Row="1" Name="lbFiles" KeyDown="lbFiles_KeyDown" Width="400"/>
-        <Label Grid.ColumnSpan="3" Grid.Row="3" Content="Increment" />
-        <TextBox Grid.ColumnSpan="3" Grid.Row="4" Name="tbIncrement" Padding="2" PreviewTextInput="tbIncrement_PreviewTextInput"/>
-        <Button Grid.ColumnSpan="3" Grid.Row="6"  Name="btnGenerate" Click="btnGenerate_Click">Generate</Button>
+        <Label Grid.Row="3" Content="Increment Y" />
+        <TextBox Grid.Row="4" Name="tbIncrementY" Padding="2" PreviewTextInput="tbIncrement_PreviewTextInput"/>
+        <Label Grid.Row="3" Grid.Column="3" Content="Increment X" />
+        <TextBox Grid.Row="4" Grid.Column="3" Name="tbIncrementX" Padding="2" PreviewTextInput="tbIncrement_PreviewTextInput"/>
+        <Button Grid.Row="6"  x:Name="btnChromatogram" Click="btnChromatogram_Click" >Chromatogram</Button>
+        <Button Grid.Row="6" Grid.Column="2" Name="btnIntegration" Click="btnIntegration_Click">Integration</Button>
     </Grid>
-
 </Window>
