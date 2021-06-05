@@ -95,7 +95,7 @@ namespace ChemTools
             }
             catch
             {
-                MessageBox.Show("An error occured", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("An error occured - Blame Nastia!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {
@@ -150,8 +150,8 @@ namespace ChemTools
                     {
                         chromatogram.Add(new ChromatogramItem
                         {
-                            Time = decimal.Parse(items[0]),
-                            Value = decimal.Parse(items[2]),
+                            Time = ParseDecimal(items[0]).Value,
+                            Value = ParseDecimal(items[2]).Value,
                         });
                     }
                 }
@@ -273,7 +273,7 @@ namespace ChemTools
 
         private decimal? ParseDecimal(string str)
         {
-            bool isNumeric = decimal.TryParse(str, out decimal n);
+            bool isNumeric = decimal.TryParse(Regex.Replace(str, @"\s", ""), out decimal n);
             if (!isNumeric)
                 return null;
             return n;
