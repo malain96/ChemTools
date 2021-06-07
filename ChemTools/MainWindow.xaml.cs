@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,10 +18,13 @@ namespace ChemTools
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly AppSettings _settings;
+
+        public MainWindow(AppSettings settings)
         {
             InitializeComponent();
-            Title = "ChemTools";
+            _settings = settings;
+            Title = $"ChemTools - v{_settings.Version}";
         }
 
         private void btnOpenFiles_Click(object sender, RoutedEventArgs e)
@@ -93,9 +97,10 @@ namespace ChemTools
                 }
                 MessageBox.Show(string.Format("File generated: {0}", file), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("An error occured - Blame Nastia!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                string errorFile = GenerateErrorFile(ex);
+                MessageBox.Show($"An error occured - Please send the following file to the app developer: {errorFile}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {
@@ -193,7 +198,7 @@ namespace ChemTools
         private string GenerateChromatogramExcel(Dictionary<string, List<ChromatogramItem>> chromatograms)
         {
 
-            string fileName = GetFileNameWithTimestamp("chromatogram");
+            string fileName = GetFileFullPath("chromatogram");
             FileInfo newFile = new FileInfo(fileName);
             using (ExcelPackage xlPackage = new ExcelPackage(newFile))
             {
@@ -226,7 +231,7 @@ namespace ChemTools
 
         private string GenerateIntegrationExcel(Dictionary<string, List<IntegrationItem>> integrations)
         {
-            string fileName = GetFileNameWithTimestamp("integration");
+            string fileName = GetFileFullPath("integration");
             FileInfo newFile = new FileInfo(fileName);
             using (ExcelPackage xlPackage = new ExcelPackage(newFile))
             {
@@ -241,7 +246,7 @@ namespace ChemTools
                     ws.Cells[1, 5].Value = "item.RelativeArea";
                     ws.Cells[1, 6].Value = "item.RelativeHeight";
                     int row = 2;
-                    foreach(IntegrationItem item in integration.Value)
+                    foreach (IntegrationItem item in integration.Value)
                     {
                         ws.Cells[row, 1].Value = item.Number;
                         ws.Cells[row, 2].Value = ConvertNullable(item.RetentionTime);
@@ -257,13 +262,24 @@ namespace ChemTools
             return fileName;
         }
 
-        private string GetFileNameWithTimestamp(string name)
+        private string GenerateErrorFile(Exception ex)
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            string directory = string.Format("{0}\\ChemToolsFiles", Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+            string file = GetFileFullPath("errors", _settings.ErrorDir, "yyyyMMdd", "txt");
+            StringBuilder sb = new();
+            sb.AppendLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+            sb.AppendLine(ex.Message);
+            sb.AppendLine(ex.StackTrace);
+            File.AppendAllText(file, sb.ToString());
+            return file;
+        }
+
+        private string GetFileFullPath(string name, string extraFolder = "", string dateFormat = "yyyyMMddHHmmssffff", string extension = "xlsx")
+        {
+            string directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), _settings.ExportDir, extraFolder);
             if (!Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
-            return string.Format("{0}\\{1}-{2}.xlsx", directory, name,DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+            string fileName = $"{name}-{DateTime.Now.ToString(dateFormat)}.{extension}";
+            return Path.Combine(directory, fileName);
         }
 
         private bool IsNumeric(string s)
