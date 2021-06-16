@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -32,7 +33,7 @@ namespace ChemTools
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
             openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            openFileDialog.RestoreDirectory = false;
             if (openFileDialog.ShowDialog() == true)
             {
                 foreach (string filename in openFileDialog.FileNames)
@@ -155,8 +156,8 @@ namespace ChemTools
                     {
                         chromatogram.Add(new ChromatogramItem
                         {
-                            Time = ParseDecimal(items[0]).Value,
-                            Value = ParseDecimal(items[2]).Value,
+                            Time = ParseDecimal(items[0]) ?? 0,
+                            Value = ParseDecimal(items[2]) ?? 0,
                         });
                     }
                 }
@@ -198,7 +199,7 @@ namespace ChemTools
         private string GenerateChromatogramExcel(Dictionary<string, List<ChromatogramItem>> chromatograms)
         {
 
-            string fileName = GetFileFullPath("chromatogram");
+            string fileName = GetFileFullPath(chromatograms.Keys.First());
             FileInfo newFile = new FileInfo(fileName);
             using (ExcelPackage xlPackage = new ExcelPackage(newFile))
             {
@@ -231,7 +232,7 @@ namespace ChemTools
 
         private string GenerateIntegrationExcel(Dictionary<string, List<IntegrationItem>> integrations)
         {
-            string fileName = GetFileFullPath("integration");
+            string fileName = GetFileFullPath(integrations.Keys.First());
             FileInfo newFile = new FileInfo(fileName);
             using (ExcelPackage xlPackage = new ExcelPackage(newFile))
             {
@@ -267,8 +268,9 @@ namespace ChemTools
             string file = GetFileFullPath("errors", _settings.ErrorDir, "yyyyMMdd", "txt");
             StringBuilder sb = new();
             sb.AppendLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
-            sb.AppendLine(ex.Message);
-            sb.AppendLine(ex.StackTrace);
+            sb.AppendLine($"Source : {ex.Source}");
+            sb.AppendLine($"Target : {ex.TargetSite?.ToString()}");
+            sb.AppendLine(ex.ToString());
             File.AppendAllText(file, sb.ToString());
             return file;
         }
