@@ -1,12 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ChemTools
@@ -28,7 +23,7 @@ namespace ChemTools
 
             Configuration = builder.Build();
 
-            ServiceCollection serviceCollection = new ServiceCollection();
+            ServiceCollection serviceCollection = new();
             ConfigureServices(serviceCollection);
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
@@ -42,6 +37,11 @@ namespace ChemTools
             AppSettings appSettings = new();
             Configuration.GetSection(nameof(AppSettings)).Bind(appSettings);
             services.AddSingleton(appSettings);
+
+            NucleosideSettings nucleosideSettings = new();
+            Configuration.GetSection(nameof(NucleosideSettings)).Bind(nucleosideSettings);
+            services.AddSingleton(nucleosideSettings);
+
             services.AddScoped(typeof(MainWindow));
         }
     }
