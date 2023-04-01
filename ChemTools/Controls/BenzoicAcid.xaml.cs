@@ -1,4 +1,4 @@
-﻿using ChemTools.Models;
+﻿using ChemTools.Entities;
 using Microsoft.Win32;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing.Chart;

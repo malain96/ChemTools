@@ -1,4 +1,4 @@
-﻿namespace ChemTools.Models
+﻿namespace ChemTools.Entities
 {
     public class IntegrationItem
     {

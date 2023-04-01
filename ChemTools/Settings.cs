@@ -11,22 +11,20 @@ namespace ChemTools
 
     public class NucleosideSettings
     {
-        public List<Nucleoside> Nucleosides { get; set; }
-        public List<PhosphateGroup> PhosphateGroups { get; set; }
+        public List<ChemElement> Nucleosides { get; set; }
+        public List<ChemElementWithHydrogen> PhosphateGroups { get; set; }
+        public List<ChemElementWithHydrogen> Carbamates { get; set; }
     }
 
-    public class Nucleoside
+    public class ChemElement
     {
         public string Name { get; set; }
         public string Code { get; set; }
         public double Mass { get; set; }
     }
 
-    public class PhosphateGroup
+    public class ChemElementWithHydrogen : ChemElement
     {
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public double Mass { get; set; }
         public short HydrogenCount { get; set; }
     }
 }

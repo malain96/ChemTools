@@ -15,8 +15,8 @@
                     <StackPanel />
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
-            <MenuItem Header="Benzoic Acid" Name="miBenzoicAcid" Click="MenuItem_Click"/>
-            <MenuItem Header="Nucleosides" Name="miNucleosides"  Click="MenuItem_Click"/>
+            <MenuItem Padding="5" Header="Benzoic Acid" Name="miBenzoicAcid" Click="MenuItem_Click"/>
+            <MenuItem Padding="5" Header="Nucleosides" Name="miNucleosides"  Click="MenuItem_Click"/>
         </Menu>
         <controls:BenzoicAcid x:Name="ucBenzoicAcid" Grid.Column="1" Visibility="Collapsed"/>
         <controls:Nucleosides x:Name="ucNucleosides" Grid.Column="1" Visibility="Collapsed"/>
