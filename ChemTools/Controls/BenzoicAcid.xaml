@@ -25,9 +25,9 @@
         <Button Grid.Column="1" Name="btnOpenFile" Click="BtnOpenFiles_Click" Margin="0,5">Open files</Button>
         <Button Grid.Column="2" Name="btnClear" Click="BtnClear_Click" Margin="5,5,0,5">Clear</Button>
         <ListBox Grid.ColumnSpan="3" Grid.Row="1" Name="lbFiles" KeyDown="LbFiles_KeyDown" Width="400" />
-        <Label Grid.Row="3" Content="Increment Y" />
+        <Label Grid.Row="3" Content="Increment Y" Padding="0,5"/>
         <TextBox Grid.Row="4" Name="tbIncrementY" Padding="2" PreviewTextInput="TbIncrement_PreviewTextInput" />
-        <Label Grid.Row="3" Grid.Column="3" Content="Increment X" />
+        <Label Grid.Row="3" Grid.Column="3" Content="Increment X" Padding="0,5"/>
         <TextBox Grid.Row="4" Grid.Column="3" Name="tbIncrementX" Padding="2" PreviewTextInput="TbIncrement_PreviewTextInput" />
         <Button Grid.Row="6"  x:Name="btnChromatogram" Click="BtnChromatogram_Click" >Chromatogram</Button>
         <Button Grid.Row="6" Grid.Column="2" Name="btnIntegration" Click="BtnIntegration_Click">Integration</Button>

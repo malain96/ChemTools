@@ -1,12 +1,21 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 
 namespace ChemTools.Entities
 {
     public class Nucleotide
     {
         public string Code { get; set; }
-        public double Mass { get; set; }
+
+        private double _mass;
+
+        public double Mass
+        {
+            get { return Math.Round(_mass, 4); }
+            set { _mass = value; }
+        }
+
         public double MassResult { get; set; }
 
         public double ErrorMargin

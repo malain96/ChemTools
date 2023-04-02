@@ -21,12 +21,23 @@ namespace ChemTools.Controls
         public Nucleosides()
         {
             InitializeComponent();
+            tbCharge.Text = "1";
         }
 
         private void BtnCalculateMass_Click(object sender, RoutedEventArgs e)
         {
             Mouse.OverrideCursor = Cursors.Wait;
-            var massResult = Math.Round(double.Parse(tbMass.Text), 4);
+
+            //Check inputs
+            var (hasError, massInput, chargeInput) = CheckInputs();
+            if (hasError)
+            {
+                Mouse.OverrideCursor = Cursors.Arrow;
+                return;
+            }
+
+            //Try to find a matching nucleotide
+            var massResult = Math.Round((massInput + chargeInput) * chargeInput, 4);
             var possibleNucleotides = CalculateNucleotides(0, null, massResult);
             for (var counter = 1; !possibleNucleotides.Any(x => x.ErrorMargin >= -8 && x.ErrorMargin <= 8); counter++)
             {
@@ -36,9 +47,40 @@ namespace ChemTools.Controls
                     listToAdd.AddRange(CalculateNucleotides(counter, previousNucleotide, massResult));
                 }
                 possibleNucleotides.AddRange(listToAdd);
+
+                if (possibleNucleotides.OrderBy(x => x.Mass).Last().Mass > 1500)
+                {
+                    possibleNucleotides = new List<Nucleotide>();
+                    MessageBox.Show("No results found", "No results", MessageBoxButton.OK, MessageBoxImage.Information);
+                    break;
+                }
             }
+
+            //Display the result
             lvPossibleNucleotides.ItemsSource = possibleNucleotides.DistinctBy(x => x.OderedCode).Where(x => x.ErrorMargin >= -8 && x.ErrorMargin <= 8).OrderByDescending(x => x.ErrorMargin);
             Mouse.OverrideCursor = Cursors.Arrow;
+        }
+
+        private (bool hasError, double mass, double charge) CheckInputs()
+        {
+            bool hasError = false;
+            if (!double.TryParse(tbMass.Text, out double massInput))
+            {
+                MessageBox.Show("The given mass is not a valid number", "Input error", MessageBoxButton.OK, MessageBoxImage.Error);
+                hasError = true;
+            }
+            if (!double.TryParse(tbCharge.Text, out double chargeInput))
+            {
+                MessageBox.Show("The given charge is not a valid number", "Input error", MessageBoxButton.OK, MessageBoxImage.Error);
+                hasError = true;
+            }
+            if (chargeInput < 1 || chargeInput > 3)
+            {
+                MessageBox.Show("The charge must be between 1 and 3", "Input error", MessageBoxButton.OK, MessageBoxImage.Error);
+                hasError = true;
+            }
+
+            return (hasError, massInput, chargeInput);
         }
 
         private List<Nucleotide> CalculateNucleotides(int counter, Nucleotide previousNucleotide, double massResult)
@@ -100,6 +142,12 @@ namespace ChemTools.Controls
         private void TbMass_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             var regex = new Regex("^[.,][0-9]+$|^[0-9]*[.,]{0,1}[0-9]*$");
+            e.Handled = !regex.IsMatch((sender as TextBox)?.Text.Insert((sender as TextBox)?.SelectionStart ?? 0, e.Text));
+        }
+
+        private void TbCharge_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex("^[1-3]{1,1}$");
             e.Handled = !regex.IsMatch((sender as TextBox)?.Text.Insert((sender as TextBox)?.SelectionStart ?? 0, e.Text));
         }
     }

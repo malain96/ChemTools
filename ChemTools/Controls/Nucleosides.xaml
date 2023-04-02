@@ -9,6 +9,7 @@
     <Grid HorizontalAlignment="Center" Width="auto">
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="25"/>
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -16,10 +17,14 @@
             <ColumnDefinition />
             <ColumnDefinition Width="10"/>
             <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TextBox Grid.Row="1" Name="tbMass" Padding="2" PreviewTextInput="TbMass_PreviewTextInput" HorizontalAlignment="Stretch"/>
-        <Button Grid.Row="1" Grid.Column="2" x:Name="btnCalculateMass" Click="BtnCalculateMass_Click" Width="80" HorizontalAlignment="Right">Calculate</Button>
-        <ListView Grid.Row="2" Grid.ColumnSpan="3" Margin="0,10" Name="lvPossibleNucleotides">
+        <Label Content="Mass" Grid.Row="1" Padding="0,5"/>
+        <TextBox Grid.Row="2" Name="tbMass" Padding="2" PreviewTextInput="TbMass_PreviewTextInput" HorizontalAlignment="Stretch"/>
+        <Label Content="Charge" Grid.Row="1" Grid.Column="2" Padding="0,5"/>
+        <TextBox Grid.Row="2" Grid.Column="2" Name="tbCharge" Padding="2" PreviewTextInput="TbCharge_PreviewTextInput" HorizontalAlignment="Stretch"/>
+        <Button Grid.Row="2" Grid.Column="3" x:Name="btnCalculateMass" Click="BtnCalculateMass_Click" Width="80" HorizontalAlignment="Right">Calculate</Button>
+        <ListView Grid.Row="3" Grid.ColumnSpan="4" Margin="0,5" Name="lvPossibleNucleotides">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Code" Width="100" DisplayMemberBinding="{Binding Code}" />
