@@ -9,8 +9,6 @@ using System.Windows.Input;
 
 namespace ChemTools.Controls
 {
-    //TODO Update readme
-
     /// <summary>
     /// Interaction logic for Nucleosides.xaml
     /// </summary>
@@ -148,7 +146,16 @@ namespace ChemTools.Controls
         private void TbCharge_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             var regex = new Regex("^[1-3]{1,1}$");
-            e.Handled = !regex.IsMatch((sender as TextBox)?.Text.Insert((sender as TextBox)?.SelectionStart ?? 0, e.Text));
+            string str;
+            if (string.IsNullOrEmpty((sender as TextBox)?.SelectedText))
+            {
+                str = (sender as TextBox)?.Text.Insert((sender as TextBox)?.SelectionStart ?? 0, e.Text);
+            }
+            else
+            {
+                str = e.Text;
+            }
+            e.Handled = !regex.IsMatch(str);
         }
     }
 }

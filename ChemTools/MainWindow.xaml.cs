@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Reflection;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace ChemTools
@@ -16,7 +17,7 @@ namespace ChemTools
             InitializeComponent();
             _appSettings = appSettings;
             _nucleosideSettings = nucleosideSettings;
-            Title = $"ChemTools - v{_appSettings.Version}";
+            Title = $"ChemTools - v{Assembly.GetExecutingAssembly().GetName().Version}";
 
             ucBenzoicAcid.Settings = _appSettings;
             ucBenzoicAcid.Visibility = Visibility.Visible;

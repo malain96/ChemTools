@@ -4,7 +4,6 @@ namespace ChemTools
 {
     public class AppSettings
     {
-        public string Version { get; set; }
         public string ExportDir { get; set; }
         public string ErrorDir { get; set; }
     }

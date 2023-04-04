@@ -6,7 +6,7 @@
         mc:Ignorable="d" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Menu HorizontalAlignment="Left" Grid.Column="0" Width="100">
@@ -15,10 +15,10 @@
                     <StackPanel />
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
-            <MenuItem Padding="5" Header="Benzoic Acid" Name="miBenzoicAcid" Click="MenuItem_Click"/>
-            <MenuItem Padding="5" Header="Nucleosides" Name="miNucleosides"  Click="MenuItem_Click"/>
+            <MenuItem Padding="5" Header="Benzoic Acid" Name="miBenzoicAcid" Click="MenuItem_Click" />
+            <MenuItem Padding="5" Header="Nucleosides" Name="miNucleosides"  Click="MenuItem_Click" />
         </Menu>
-        <controls:BenzoicAcid x:Name="ucBenzoicAcid" Grid.Column="1" Visibility="Collapsed"/>
-        <controls:Nucleosides x:Name="ucNucleosides" Grid.Column="1" Visibility="Collapsed"/>
+        <controls:BenzoicAcid x:Name="ucBenzoicAcid" Grid.Column="1" Visibility="Collapsed" />
+        <controls:Nucleosides x:Name="ucNucleosides" Grid.Column="1" Visibility="Collapsed" />
     </Grid>
 </Window>
