@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="ChemTools.Controls.TripletsFinder"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid HorizontalAlignment="Center" Width="auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
+            <RowDefinition />
+            <RowDefinition Height="5" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label Content="Tolerance" />
+        <TextBox Grid.Row="1" Grid.Column="0" Name="TbTolerance" HorizontalAlignment="Stretch" PreviewTextInput="AnyNumber" />
+        <Label Grid.Row="0" Grid.Column="2" Content="Min Distance" />
+        <TextBox Grid.Row="1" Grid.Column="2" Name="TbMinDistance" HorizontalAlignment="Stretch" PreviewTextInput="AnyNumber"/>
+        <Label Grid.Row="0" Grid.Column="4" Content="Max Distance" />
+        <TextBox Grid.Row="1" Grid.Column="4" Name="TbMaxDistance" HorizontalAlignment="Stretch" PreviewTextInput="AnyNumber"/>
+        <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Name="BtnOpenFile" Click="BtnSelectFile_Click">Select file</Button>
+        <ListView Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="5" Name="LvPeaks" d:DataContext="{d:DesignData Triplet }">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Peak 1" Width="75" DisplayMemberBinding="{Binding Peak1}" />
+                    <GridViewColumn Header="Peak 2" Width="75" DisplayMemberBinding="{Binding Peak2}" />
+                    <GridViewColumn Header="Peak 3" Width="75" DisplayMemberBinding="{Binding Peak3}" />
+                    <GridViewColumn Header="Error Margin" Width="75" DisplayMemberBinding="{Binding ErrorMargin}" />
+                    <GridViewColumn Header="Distance" Width="75" DisplayMemberBinding="{Binding Distance}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+
+
+</UserControl>

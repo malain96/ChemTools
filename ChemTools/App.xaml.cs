@@ -9,15 +9,15 @@ namespace ChemTools
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App
     {
-        public IServiceProvider ServiceProvider { get; private set; }
+        private IServiceProvider ServiceProvider { get; set; }
 
-        public IConfiguration Configuration { get; private set; }
+        private IConfiguration Configuration { get; set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            IConfigurationBuilder builder = new ConfigurationBuilder()
+            var builder = new ConfigurationBuilder()
              .SetBasePath(Directory.GetCurrentDirectory())
              .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
@@ -28,7 +28,7 @@ namespace ChemTools
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
-            MainWindow mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+            var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
         }
 

@@ -7,37 +7,37 @@ namespace ChemTools
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        private readonly AppSettings _appSettings;
-        private readonly NucleosideSettings _nucleosideSettings;
-
         public MainWindow(AppSettings appSettings, NucleosideSettings nucleosideSettings)
         {
             InitializeComponent();
-            _appSettings = appSettings;
-            _nucleosideSettings = nucleosideSettings;
             Title = $"ChemTools - v{Assembly.GetExecutingAssembly().GetName().Version}";
 
-            ucBenzoicAcid.Settings = _appSettings;
-            ucBenzoicAcid.Visibility = Visibility.Visible;
+            UcBenzoicAcid.Settings = appSettings;
+            UcBenzoicAcid.Visibility = Visibility.Visible;
 
-            ucNucleosides.NucleosideSettings = _nucleosideSettings;
-            ucNucleosides.Visibility = Visibility.Collapsed;
+            UcNucleosides.NucleosideSettings = nucleosideSettings;
+            UcNucleosides.Visibility = Visibility.Collapsed;
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ucBenzoicAcid.Visibility = Visibility.Collapsed;
-            ucNucleosides.Visibility = Visibility.Collapsed;
+            UcBenzoicAcid.Visibility = Visibility.Collapsed;
+            UcNucleosides.Visibility = Visibility.Collapsed;
+            UcTripletsFinder.Visibility = Visibility.Collapsed;
             switch (((MenuItem)sender).Name)
             {
-                case "miBenzoicAcid":
-                    ucBenzoicAcid.Visibility = Visibility.Visible;
+                case "MiBenzoicAcid":
+                    UcBenzoicAcid.Visibility = Visibility.Visible;
                     break;
 
-                case "miNucleosides":
-                    ucNucleosides.Visibility = Visibility.Visible;
+                case "MiNucleosides":
+                    UcNucleosides.Visibility = Visibility.Visible;
+                    break;
+
+                case "MiTripletsFinder":
+                    UcTripletsFinder.Visibility = Visibility.Visible;
                     break;
             }
         }

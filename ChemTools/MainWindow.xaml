@@ -15,10 +15,12 @@
                     <StackPanel />
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
-            <MenuItem Padding="5" Header="Benzoic Acid" Name="miBenzoicAcid" Click="MenuItem_Click" />
-            <MenuItem Padding="5" Header="Nucleosides" Name="miNucleosides"  Click="MenuItem_Click" />
+            <MenuItem Padding="5" Header="Benzoic Acid" Name="MiBenzoicAcid" Click="MenuItem_Click" />
+            <MenuItem Padding="5" Header="Nucleosides" Name="MiNucleosides"  Click="MenuItem_Click" />
+            <MenuItem Padding="5" Header="Triplets Finder" Name="MiTripletsFinder"  Click="MenuItem_Click" />
         </Menu>
-        <controls:BenzoicAcid x:Name="ucBenzoicAcid" Grid.Column="1" Visibility="Collapsed" />
-        <controls:Nucleosides x:Name="ucNucleosides" Grid.Column="1" Visibility="Collapsed" />
+        <controls:BenzoicAcid x:Name="UcBenzoicAcid" Grid.Column="1" Visibility="Collapsed" />
+        <controls:Nucleosides x:Name="UcNucleosides" Grid.Column="1" Visibility="Collapsed" />
+        <controls:TripletsFinder x:Name="UcTripletsFinder" Grid.Column="1" Visibility="Collapsed" />
     </Grid>
 </Window>
