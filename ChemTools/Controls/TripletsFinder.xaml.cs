@@ -14,6 +14,7 @@ namespace ChemTools.Controls;
 
 public partial class TripletsFinder
 {
+    private List<double> _peaks;
     private const double DefaultTolerance = 0.1;
     private const double DefaultMinDistance = 5;
     private const double DefaultMaxDistance = 9;
@@ -31,19 +32,72 @@ public partial class TripletsFinder
         var filePaths = OpenFilePicker();
         if (filePaths.Length == 0)
             return;
-
-        var peaks = LoadPeaksFromExcel(filePaths[0]);
-        if (peaks.Count == 0)
+        
+        _peaks = LoadPeaksFromExcel(filePaths[0]);
+        if (_peaks.Count == 0)
         {
             MessageBox.Show("No valid peaks found in the file.", "Warning", MessageBoxButton.OK,
                 MessageBoxImage.Warning);
             return;
         }
+        
+        TbFile.Text = Path.GetFileName(filePaths[0]);
+        
+        LvPeaks_Load();
+    }
 
+    private void BtnFind_Click(object sender, RoutedEventArgs e)
+    {
+        LvPeaks_Load();
+    }
+
+    private void BtnCopySelectedToClipboard_Click(object sender, RoutedEventArgs e)
+    {
+        CopySelectedTripletsToClipboard();
+    }
+
+    private void BtnCopyAllToClipboard_Click(object sender, RoutedEventArgs e)
+    {
+        var allItems = LvPeaks.Items.Cast<Triplet>().ToArray();
+        CopyTripletsToClipboard(allItems);
+    }
+    
+    private void LvPeaks_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.C && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+        {
+            CopySelectedTripletsToClipboard();
+            e.Handled = true;
+        }
+    }
+
+    private void CopySelectedTripletsToClipboard()
+    {
+        var items = LvPeaks.SelectedItems.Cast<Triplet>().ToArray();
+        CopyTripletsToClipboard(items);
+    }
+
+    private static void CopyTripletsToClipboard(Triplet[] items)
+    {
+        if (items.Length == 0) return;
+
+        var lines = new List<string>();
+
+        foreach (var item in items)
+        {
+            var line = $"{item.Peak1}\t{item.Peak2}\t{item.Peak3}\t{item.ErrorMargin}\t{item.Distance}";
+            lines.Add(line);
+        }
+
+        Clipboard.SetText(string.Join(Environment.NewLine, lines));
+    }
+
+    private void LvPeaks_Load()
+    {
         var tolerance = ParseNumericTextBoxOrDefault(TbTolerance, DefaultTolerance);
         var minDistance = ParseNumericTextBoxOrDefault(TbMinDistance, DefaultMinDistance);
         var maxDistance = ParseNumericTextBoxOrDefault(TbMaxDistance, DefaultMaxDistance);
-        var triplets = FindTriplets(peaks, tolerance, minDistance, maxDistance);
+        var triplets = FindTriplets(_peaks, tolerance, minDistance, maxDistance);
 
         LvPeaks.ItemsSource = triplets;
     }

@@ -12,6 +12,8 @@
             <RowDefinition Height="5" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="5" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
             <RowDefinition />
             <RowDefinition Height="5" />
         </Grid.RowDefinitions>
@@ -28,10 +30,14 @@
         <TextBox Grid.Row="1" Grid.Column="2" Name="TbMinDistance" HorizontalAlignment="Stretch" PreviewTextInput="AnyNumber"/>
         <Label Grid.Row="0" Grid.Column="4" Content="Max Distance" />
         <TextBox Grid.Row="1" Grid.Column="4" Name="TbMaxDistance" HorizontalAlignment="Stretch" PreviewTextInput="AnyNumber"/>
-        <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Name="BtnOpenFile" Click="BtnSelectFile_Click">Select file</Button>
-        <ListView Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="5" Name="LvPeaks" d:DataContext="{d:DesignData Triplet }">
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3"  Name="TbFile">No file selected</TextBlock>
+        <Button Grid.Column="4" Grid.Row="3" Name="BtnOpenFile" Click="BtnSelectFile_Click">Open file</Button>
+        <Button Grid.Column="0" Grid.Row="5" Name="BtnCopyAllToClipboard" Click="BtnCopyAllToClipboard_Click">Copy all</Button>
+        <Button Grid.Column="2" Grid.Row="5" Name="BtnCopySelectedToClipboard" Click="BtnCopySelectedToClipboard_Click">Copy selected</Button>
+        <Button Grid.Column="4" Grid.Row="5" Name="BtnFind" Click="BtnFind_Click">Find triplets</Button>
+        <ListView Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="5" Name="LvPeaks" PreviewKeyDown="LvPeaks_PreviewKeyDown">
             <ListView.View>
-                <GridView>
+                <GridView >
                     <GridViewColumn Header="Peak 1" Width="75" DisplayMemberBinding="{Binding Peak1}" />
                     <GridViewColumn Header="Peak 2" Width="75" DisplayMemberBinding="{Binding Peak2}" />
                     <GridViewColumn Header="Peak 3" Width="75" DisplayMemberBinding="{Binding Peak3}" />
