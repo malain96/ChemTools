@@ -160,18 +160,18 @@ public partial class TripletsFinder
         double maxDistance)
     {
         var result = new List<Triplet>();
-        var sortedPeaks = peaks.OrderBy(p => p).ToList();
+        var sortedPeaks = peaks.OrderByDescending(p => p).ToList();
 
         for (var i = 0; i < sortedPeaks.Count - 2; i++)
         {
             for (var j = i + 1; j < sortedPeaks.Count - 1; j++)
             {
-                var delta1 = sortedPeaks[j] - sortedPeaks[i];
+                var delta1 = sortedPeaks[i] - sortedPeaks[j];
                 if (delta1 < minDistance || delta1 > maxDistance) continue;
 
                 for (var k = j + 1; k < sortedPeaks.Count; k++)
                 {
-                    var delta2 = sortedPeaks[k] - sortedPeaks[j];
+                    var delta2 = sortedPeaks[j] - sortedPeaks[k];
                     var errorMargin = Math.Abs(delta1 - delta2);
 
                     if (errorMargin <= tolerance)
